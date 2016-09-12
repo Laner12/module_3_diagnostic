@@ -4,11 +4,15 @@ RSpec.feature "Guest searches with a zip-code" do
   scenario "a guest enters a zip-code and is show the ten closest" do
     visit "/"
 
-    expect(page).to have_content "Zip-code"
+    # expect(page).to have_content "Search by zip..."
     expect(page).to have_button "Locate"
 
-    fill_in "Zip-code", with: 80215
-    click_button "Locate"
+    within(".form-inline") do
+      fill_in "#q .form-control", with: 80203
+      click_button "Locate"
+    end
+
+    expect(current_path).to eq("/search")
   end
 end
 # As a user
