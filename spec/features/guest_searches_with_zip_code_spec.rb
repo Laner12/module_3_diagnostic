@@ -8,8 +8,8 @@ RSpec.feature "Guest searches with a zip-code" do
     expect(page).to have_button "Locate"
 
     within(".form-inline") do
-      fill_in "#q .form-control", with: 80203
-      click_button "Locate"
+      fill_in "q", with: 80203
+      click_on "Locate"
     end
 
     expect(current_path).to eq("/search")
