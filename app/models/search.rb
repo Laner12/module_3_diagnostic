@@ -1,10 +1,14 @@
 class Search < ActiveRecord::Base
-  def location_call(zip-code)
-    response = Faraday.new("https://api.data.gov/nrel/alt-fuel-stations/v1/nearest.json?location=#{zip-code}&fuel_type=LPG&fuel_type=ELEC&radius=0.0 to 6.0")
-    
+
+  def initalize
+    @connection = Faraday.new("https://api.data.gov/nrel/alt-fuel-stations/v1/nearest.json?")
+    @connection.headers["X-Api-Key"] = "ENV[api_key]"
   end
 
-  private
+  def location_call(location)
+    response = @connection.get "location=#{locaiton}&fuel_type=LPG&fuel_type=ELEC&radius=0.0 to 6.0"
+    parse(response.body)
+  end
 
   def parse(response)
     JSON.parse(response, symbolize_names: true)
